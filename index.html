@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mänick Mänschion</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Helvetica Neue", Helvetica, Verdana, system-ui, sans-serif;
+      background-color: #1a1e28;
+      background-image:
+        linear-gradient(180deg, #1a1e28 0%, #0c0e14 100%);
+      color: #222;
+      line-height: 1.5;
+    }
+
+    #page {
+      width: min(820px, 100%);
+      margin: 0 auto;
+      background: #fff;
+      box-shadow: 0 0 64px rgba(0, 0, 0, 0.85);
+      min-height: 100vh;
+    }
+
+    header {
+      text-align: center;
+      background: linear-gradient(180deg, #2a3140 0%, #1a1e28 100%);
+      border-bottom: 4px solid #e8a020;
+      padding: 1.5rem 1rem 1rem;
+      color: #f0f2f5;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+      letter-spacing: 0.04em;
+      color: #f5c040;
+      text-shadow: 0 2px 0 #3a2800;
+    }
+
+    header .tagline {
+      margin: 0.5rem 0 0;
+      color: #b8c0d0;
+      font-size: 1rem;
+    }
+
+    .hero {
+      display: block;
+      width: 100%;
+      height: auto;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+      background: #000;
+    }
+
+    #pagebody {
+      padding: 1.25rem 1.75rem 2rem;
+    }
+
+    section {
+      margin-bottom: 1.75rem;
+    }
+
+    h2 {
+      margin: 0 0 0.5rem;
+      font-size: 1.35rem;
+      color: #2a3140;
+      border-bottom: 1px solid #e0e4ec;
+      padding-bottom: 0.25rem;
+    }
+
+    section > p {
+      margin: 0.5rem 0 0.75rem;
+      color: #444;
+      font-size: 0.95rem;
+    }
+
+    ul {
+      margin: 0.25rem 0 0;
+      padding-left: 1.25rem;
+    }
+
+    li {
+      margin: 0.35rem 0;
+    }
+
+    a {
+      color: #c47800;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    a:hover {
+      color: #8a5200;
+      text-decoration: underline;
+    }
+
+    .play-btn {
+      display: inline-block;
+      margin: 0.5rem 0 1rem;
+      padding: 0.65rem 1.4rem;
+      background: #e8a020;
+      color: #1a1200 !important;
+      border-radius: 6px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      text-decoration: none !important;
+      box-shadow: 0 2px 0 #a07010;
+    }
+
+    .play-btn:hover {
+      background: #f5b830;
+      color: #1a1200 !important;
+    }
+
+    .downloads {
+      list-style: none;
+      padding: 0;
+      margin: 0.5rem 0 0.75rem;
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    .downloads li {
+      margin: 0;
+      padding: 0.6rem 0.8rem;
+      border: 1px solid #e0e4ec;
+      border-radius: 6px;
+      background: #f8f9fb;
+    }
+
+    .downloads .note {
+      display: block;
+      color: #555;
+      font-size: 0.85rem;
+      font-weight: normal;
+    }
+
+    .version {
+      color: #666;
+      font-size: 0.85rem;
+    }
+
+    footer {
+      background-color: #12151c;
+      color: #a0a8b8;
+      font-size: 0.85rem;
+      text-align: center;
+      padding: 0.75rem 1rem;
+      line-height: 1.4;
+    }
+
+    footer a {
+      color: #f0b040;
+      font-weight: 500;
+    }
+
+    footer a:hover {
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div id="page">
+    <header>
+      <h1>Mänick Mänschion</h1>
+      <p class="tagline">Point-and-click adventure · MOAS engine</p>
+    </header>
+
+    <img class="hero" src="images/screenshot.png" alt="Mänick Mänschion (SDL2 port)">
+
+    <div id="pagebody">
+      <section>
+        <h2>Play in the browser</h2>
+        <p>
+          Original 320×200, 256-colour software graphics, packaged as
+          WebAssembly with Emscripten (ASYNCIFY) and the full game data
+          preloaded. Built with Nix from the same source as the native ports.
+        </p>
+        <a class="play-btn" href="play/index.html">Play Mänick Mänschion (WASM)</a>
+        <ul>
+          <li><a href="https://github.com/Grumbel/moas">Source code (MOAS / Mänick Mänschion)</a></li>
+          <li><a href="https://github.com/Grumbel/moas#build-and-run">Native build (Nix / CMake)</a></li>
+        </ul>
+      </section>
+
+      <section id="download">
+        <h2>Download</h2>
+        <p>
+          Built from the same source as the browser version,
+          <span class="version">version @version@</span>.
+        </p>
+        <ul class="downloads">
+          <li>
+            <a href="downloads/moas-win64.zip">Windows (64-bit)</a>
+            · <a href="downloads/moas-win32.zip">32-bit</a>
+            <span class="note">Unzip and start <code>moas.exe</code>. Windows 7 and later. SDL2 included.</span>
+          </li>
+          <li>
+            <a href="downloads/moas.apk">Android (APK)</a>
+            <span class="note">Android 7 and later; touch overlay (USE / LOOK / walk), gamepads and keyboards.
+              Allow installing apps from your browser to install it.</span>
+          </li>
+          <li>
+            <a href="downloads/r36s/moas.zip">R36S and other PortMaster handhelds</a>
+            <span class="note">For ArkOS and alike (aarch64): put the zip into
+              <code>ports/PortMaster/autoinstall/</code> and start PortMaster, or unpack it to
+              <code>/roms/ports/</code>.</span>
+          </li>
+          <li>
+            <a href="downloads/moas-dos.zip">MS-DOS (DOS/4GW)</a>
+            <span class="note">Rebuilt with Open Watcom for DOSBox / real DOS. Optional; may be
+              missing if the DOS package was not built in this site revision.</span>
+          </li>
+          <li>
+            <a href="https://github.com/Grumbel/moas#build-and-run">Linux and other systems</a>
+            <span class="note">Build from source with Nix (<code>nix run github:Grumbel/moas</code>)
+              or CMake and SDL2.</span>
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>About</h2>
+        <p>
+          <strong>Mänick Mänschion</strong> is a German point-and-click adventure
+          from the mid-1990s by Thomas Holz — a humorous, home-made parody of
+          <em>Maniac Mansion</em>. It runs on the <strong>MOAS</strong>
+          (Mouse Orientiertes Adventure System) engine, originally written for
+          DOS (VGA Mode 13h, SoundBlaster). This site hosts the modern SDL2
+          port: same game logic, platform layer for video, input, timer and
+          audio, with ports to Linux, Windows, Android, WebAssembly, R36S and
+          a DOS rebuild.
+        </p>
+        <p>
+          Original release page:
+          <a href="http://www.thomasholz.de/manick.htm">thomasholz.de/manick.htm</a>.
+        </p>
+      </section>
+
+      <section>
+        <h2>Controls</h2>
+        <ul>
+          <li><strong>Mouse / touch</strong> — walk, examine, use (modes via overlay or keys)</li>
+          <li><strong>Left click / tap</strong> — primary action (walk / use / look depending on mode)</li>
+          <li><strong>Right click</strong> or mode buttons — USE / LOOK / inventory</li>
+          <li><strong>Esc</strong> — abort / menu (when armed)</li>
+          <li><strong>Gamepad</strong> — left stick or D-pad walk, right stick cursor, RT use, LT look, A skip, B/Start Esc</li>
+        </ul>
+        <p>
+          On touch screens and the WASM build, an overlay provides Save, Load,
+          USE and LOOK so the classic mouse workflow stays usable without a
+          pointer.
+        </p>
+      </section>
+    </div>
+
+    <footer>
+      <a href="https://github.com/Grumbel/moas">MOAS / Mänick Mänschion</a>
+      · GPL-2.0-or-later (engine)
+      · site built with Nix, deployed via GitHub Pages
+    </footer>
+  </div>
+</body>
+</html>
