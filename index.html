@@ -140,6 +140,47 @@
       font-weight: normal;
     }
 
+    .shot-row {
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+      margin: 0.75rem 0 0;
+    }
+
+    .shot-row img {
+      flex: 0 0 auto;
+      width: 180px;
+      height: auto;
+      border-radius: 10px;
+      border: 3px solid #2a3140;
+      background: #000;
+    }
+
+    .shot-row p {
+      margin: 0;
+      color: #444;
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 520px) {
+      .shot-row {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+
+    kbd {
+      display: inline-block;
+      padding: 0 0.35em;
+      border: 1px solid #c8cdd8;
+      border-bottom-width: 2px;
+      border-radius: 4px;
+      background: #f4f5f8;
+      font-family: inherit;
+      font-size: 0.85em;
+      line-height: 1.4;
+    }
+
     .version {
       color: #666;
       font-size: 0.85rem;
@@ -171,7 +212,8 @@
       <p class="tagline">Point-and-click adventure · MOAS engine</p>
     </header>
 
-    <img class="hero" src="images/screenshot.png" alt="Mänick Mänschion (SDL2 port)">
+    <img class="hero" src="images/screenshot.png" width="960" height="600"
+         alt="Mänick Mänschion: the front door of the mansion at night, with a cactus, a mailbox and the protagonist on the garden path">
 
     <div id="pagebody">
       <section>
@@ -180,6 +222,8 @@
           Original 320×200, 256-colour software graphics, packaged as
           WebAssembly with Emscripten (ASYNCIFY) and the full game data
           preloaded. Built with Nix from the same source as the native ports.
+          The game is German; an English translation can be switched on in the
+          options menu (<kbd>F12</kbd> or the <strong>MENU</strong> button).
         </p>
         <a class="play-btn" href="play/index.html">Play Mänick Mänschion (WASM)</a>
         <ul>
@@ -202,8 +246,8 @@
           </li>
           <li>
             <a href="downloads/moas.apk">Android (APK)</a>
-            <span class="note">Android 7 and later; touch overlay (USE / LOOK / walk), gamepads and keyboards.
-              Allow installing apps from your browser to install it.</span>
+            <span class="note">Android 5.1 and later; touch buttons in landscape and portrait,
+              gamepads and keyboards. Allow installing apps from your browser to install it.</span>
           </li>
           <li>
             <a href="downloads/r36s/moas.zip">R36S and other PortMaster handhelds</a>
@@ -248,14 +292,27 @@
           <li><strong>Mouse / touch</strong> — walk, examine, use (modes via overlay or keys)</li>
           <li><strong>Left click / tap</strong> — primary action (walk / use / look depending on mode)</li>
           <li><strong>Right click</strong> or mode buttons — USE / LOOK / inventory</li>
-          <li><strong>Esc</strong> — abort / menu (when armed)</li>
-          <li><strong>Gamepad</strong> — left stick or D-pad walk, right stick cursor, RT use, LT look, A skip, B/Start Esc</li>
+          <li><kbd>F5</kbd> / <kbd>F7</kbd> — save / load</li>
+          <li><kbd>Esc</kbd> — skip a cutscene (when the game allows it);
+            <kbd>Shift</kbd> — speed up speech</li>
+          <li><kbd>F12</kbd> — options: language (German / English), fullscreen,
+            touch buttons, game and speech speed, quit</li>
+          <li><kbd>Alt</kbd>+<kbd>Q</kbd> — quit</li>
+          <li><strong>Gamepad</strong> — left stick or D-pad walk, right stick cursor, RT use, LT look, A skip, B/Start Esc, Back options</li>
         </ul>
-        <p>
-          On touch screens and the WASM build, an overlay provides Save, Load,
-          USE and LOOK so the classic mouse workflow stays usable without a
-          pointer.
-        </p>
+        <div class="shot-row">
+          <img src="images/screenshot-portrait.png" width="720" height="1280" loading="lazy"
+               alt="Android in portrait: the game at full width with two rows of touch buttons below it">
+          <p>
+            On Android and in the browser, touch buttons provide Save, Load,
+            Esc, Skip, USE / LOOK mode and the options menu, so the classic mouse
+            workflow works without a pointer. In landscape they sit beside the
+            picture; in portrait the picture takes the full width and the buttons
+            move underneath. Save and Load are greyed out while the game would
+            ignore them (cutscenes, dialogues). Progress is kept automatically
+            when you leave the app and restored on the next start.
+          </p>
+        </div>
       </section>
     </div>
 

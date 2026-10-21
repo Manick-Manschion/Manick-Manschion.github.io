@@ -18,6 +18,14 @@
 - scripts/serve.sh for local preview
 - AGENTS.md, README.md, .gitignore
 
+## Page update (2026-10-21)
+- Screenshot re-taken from the SDL port without window decoration (960×600,
+  English, front door); same image in the game's `docs/screenshot.png`.
+- Added a portrait touch-controls screenshot (`images/screenshot-portrait.png`)
+  next to the Controls text.
+- Android requirement corrected to 5.1 (minSdk 22 in the game flake).
+- Controls: F5/F7, Esc/Shift, F12 options (English translation), Alt+Q.
+
 ## Next
 - Apply bundle to the empty github.io repo, push master.
 - Generate flake.lock (`nix flake lock` or first `nix build`) on a machine
