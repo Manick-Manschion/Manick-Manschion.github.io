@@ -40,6 +40,22 @@
           cp -rv ${game.moas-wasm}/. $out/play/
           chmod -R u+w $out/play
 
+          # Cache busting: GitHub Pages serves everything with max-age=600,
+          # so right after a deploy a browser could pair a cached moas.js
+          # with a fresh moas.wasm/moas.data (or the reverse). Version each
+          # URL by content hash; unchanged files keep their URL and cache.
+          ver() { sha256sum "$out/play/$1" | cut -c1-12; }
+          js=$(ver moas.js); wasm=$(ver moas.wasm); data=$(ver moas.data)
+          for f in $out/play/index.html $out/play/moas.html; do
+            substituteInPlace "$f" \
+              --replace-fail 'src="moas.js"' "src=\"moas.js?v=$js\"" \
+              --replace-fail 'var Module = {' "var Module = {
+      locateFile: function(path, prefix) {
+        var v = { 'moas.wasm': '$wasm', 'moas.data': '$data' }[path];
+        return prefix + path + (v ? '?v=' + v : \"\");
+      },"
+          done
+
           # Ports under stable names so the page's links never change
           # (the version is shown on the page).
           mkdir -p $out/downloads/r36s

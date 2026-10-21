@@ -7,6 +7,15 @@
 - Tip (bundle 001.1): `586de41` Initial Mänick Mänschion website scaffold
 - Bundle: `manick-web-001.1-initial-scaffold-586de41.bundle` (complete history from empty)
 
+## Cache busting for play/ (2026-10-21)
+- GitHub Pages sends `max-age=600` with no versioned URLs, so after a deploy
+  a cached moas.js could meet a fresh moas.wasm/moas.data. The site build now
+  appends `?v=<sha256[:12]>` to moas.js (script tag) and, via an injected
+  `Module.locateFile`, to moas.wasm/moas.data, in play/index.html and moas.html.
+- Checked: headless Firefox requests all three with `?v=`, 200 each.
+- Left: a stale cached play/index.html (≤10 min) still names old hashes.
+  Landing-page images and downloads are unversioned, which is harmless.
+
 ## Done (this stack)
 - Scaffold flake.nix pulling `git+https://github.com/Grumbel/moas`
   - packages used: moas-wasm, moas-win64-zip, moas-win32-zip, moas-android,
