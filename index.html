@@ -222,8 +222,12 @@
           Original 320×200, 256-colour software graphics, packaged as
           WebAssembly with Emscripten (ASYNCIFY) and the full game data
           preloaded. Built with Nix from the same source as the native ports.
-          The game is German; an English translation can be switched on in the
-          options menu (<kbd>F12</kbd> or the <strong>MENU</strong> button).
+          The game is German, with English, Spanish, French, Italian and Dutch
+          translations, including the title cards, help pages and credits. It
+          starts in your system's language; switch it in the options menu
+          (<kbd>F12</kbd> or the <strong>Options</strong> button).
+          Saves stay in your browser and can be downloaded and uploaded to move
+          them to another device.
         </p>
         <a class="play-btn" href="play/index.html">Play Mänick Mänschion (WASM)</a>
         <ul>
@@ -257,8 +261,7 @@
           </li>
           <li>
             <a href="downloads/moas-dos.zip">MS-DOS (DOS/4GW)</a>
-            <span class="note">Rebuilt with Open Watcom for DOSBox / real DOS. Optional; may be
-              missing if the DOS package was not built in this site revision.</span>
+            <span class="note">Rebuilt with Open Watcom for DOSBox / real DOS.</span>
           </li>
           <li>
             <a href="https://github.com/Grumbel/moas#build-and-run">Linux and other systems</a>
@@ -278,7 +281,7 @@
           DOS (VGA Mode 13h, SoundBlaster). This site hosts the modern SDL2
           port: same game logic, platform layer for video, input, timer and
           audio, with ports to Linux, Windows, Android, WebAssembly, R36S and
-          a DOS rebuild.
+          a DOS rebuild, and translations into five languages.
         </p>
         <p>
           Original release page:
@@ -289,15 +292,18 @@
       <section>
         <h2>Controls</h2>
         <ul>
-          <li><strong>Mouse / touch</strong> — walk, examine, use (modes via overlay or keys)</li>
-          <li><strong>Left click / tap</strong> — primary action (walk / use / look depending on mode)</li>
-          <li><strong>Right click</strong> or mode buttons — USE / LOOK / inventory</li>
+          <li><strong>Left click / tap</strong> — walk, use, talk, pick up</li>
+          <li><strong>Right click</strong> — look at an object (on touch: the LOOK mode button)</li>
+          <li><kbd>Tab</kbd> — inventory bar</li>
           <li><kbd>F5</kbd> / <kbd>F7</kbd> — save / load</li>
           <li><kbd>Esc</kbd> — skip a cutscene (when the game allows it);
             <kbd>Shift</kbd> — speed up speech</li>
-          <li><kbd>F12</kbd> — options: language (German / English), fullscreen,
-            touch buttons, game and speech speed, quit</li>
-          <li><kbd>Alt</kbd>+<kbd>Q</kbd> — quit</li>
+          <li><kbd>H</kbd> (hold) — outline everything you can click in the room</li>
+          <li><kbd>F12</kbd> — options: resume, save, load, restart, quit, and settings
+            (language, fullscreen, touch buttons, game and speech speed; remembered
+            for the next start)</li>
+          <li><kbd>F11</kbd> or <kbd>Alt</kbd>+<kbd>Enter</kbd> — fullscreen;
+            <kbd>Alt</kbd>+<kbd>Q</kbd> — quit</li>
           <li><strong>Gamepad</strong> — left stick or D-pad walk, right stick cursor, RT use, LT look, A skip, B/Start Esc, Back options</li>
         </ul>
         <div class="shot-row">
@@ -305,8 +311,8 @@
                alt="Android in portrait: the game at full width with two rows of touch buttons below it">
           <p>
             On Android and in the browser, touch buttons provide Save, Load,
-            Esc, Skip, USE / LOOK mode and the options menu, so the classic mouse
-            workflow works without a pointer. In landscape they sit beside the
+            USE / LOOK mode, Options, Hint, Skip Scene and Skip Text, so the
+            classic mouse workflow works without a pointer. In landscape they sit beside the
             picture; in portrait the picture takes the full width and the buttons
             move underneath. Save and Load are greyed out while the game would
             ignore them (cutscenes, dialogues). Progress is kept automatically

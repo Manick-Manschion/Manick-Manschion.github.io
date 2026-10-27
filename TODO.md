@@ -35,6 +35,15 @@
 - Android requirement corrected to 5.1 (minSdk 22 in the game flake).
 - Controls: F5/F7, Esc/Shift, F12 options (English translation), Alt+Q.
 
+## Page update (2026-10-27)
+- Translations: ES, FR, IT, NL besides EN (incl. title cards, help pages,
+  credits); language follows the OS; switch via F12 / Options button.
+- Controls: H hotspot hint, F11 / Alt+Enter fullscreen, Tab inventory,
+  two-page F12 menu (save/load/restart/quit + settings, persisted).
+- Touch buttons renamed as in the game (Options, Hint, Skip Scene, Skip Text).
+- Dropped the "may be missing" note on the DOS zip (the flake requires it).
+- Screenshots not re-taken.
+
 ## Next
 - Apply bundle to the empty github.io repo, push master.
 - Generate flake.lock (`nix flake lock` or first `nix build`) on a machine
@@ -47,7 +56,7 @@
 
 ## Notes
 - Build is x86_64-linux only (Android NDK / cross).
-- DOS zip copy is best-effort (`|| true`) so a missing moas-dos-zip does not
-  fail the site derivation.
+- The DOS zip is copied like the other ports; a failing moas-dos-zip build
+  fails the site build.
 - Do not spend long CI test runs in the agent environment; hand over the
   bundle and let the maintainer build.

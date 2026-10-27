@@ -6,7 +6,7 @@ and [SuperTux-Origins.github.io](https://github.com/SuperTux-Origins/SuperTux-Or
 
 - **Nix flake** pulls the playable **WASM** package (`github:Grumbel/moas#moas-wasm`)
   and the downloadable ports (Windows 64/32-bit zips, the Android APK, the R36S
-  PortMaster zip, optional DOS zip) from the game flake and assembles
+  PortMaster zip, the DOS zip) from the game flake and assembles
   `index.html`, screenshots, `play/` and `downloads/` into a single store path;
   building the site builds them all
 - **GitHub Pages** deploys that path via `.github/workflows/pages.yml`
