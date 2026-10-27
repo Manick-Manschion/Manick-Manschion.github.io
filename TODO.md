@@ -3,7 +3,7 @@
 ## Base
 - Empty / new repo: Manick-Manschion/Manick-Manschion.github.io
 - Template: kurvenrausch/kurvenrausch.github.io
-- Game: Grumbel/moas (`#moas-wasm` and port packages)
+- Game: Grumbel/moas (`#manick-wasm` and port packages)
 - Tip (bundle 001.1): `586de41` Initial Mänick Mänschion website scaffold
 - Bundle: `manick-web-001.1-initial-scaffold-586de41.bundle` (complete history from empty)
 
@@ -15,6 +15,17 @@
 - Checked: headless Firefox requests all three with `?v=`, 200 each.
 - Left: a stale cached play/index.html (≤10 min) still names old hashes.
   Landing-page images and downloads are unversioned, which is harmless.
+
+## Follow the game's moas → manick rename (2026-10-27)
+- Game commit 35c534b renamed the flake packages (`moas-*` → `manick-*`) and
+  all distribution files; the lock bump to 4e7977b broke `nix build` with
+  "attribute 'moas-wasm' missing".
+- flake.nix uses `manick-wasm`, `manick-win64-zip`, … and the WASM files
+  `manick.{html,js,wasm,data}`; `version` reads `game.manick.version` (the
+  old `game.moas` fell back silently to "0.1.0-sdl").
+- Downloads now ship as `manick-win64.zip`, `manick-win32.zip`, `manick.apk`,
+  `r36s/manick.zip`, `manick-dos.zip`; old `moas*` download URLs are gone.
+  The flake input stays named `moas` (the repo is still Grumbel/moas).
 
 ## Done (this stack)
 - Scaffold flake.nix pulling `git+https://github.com/Grumbel/moas`

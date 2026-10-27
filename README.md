@@ -4,7 +4,7 @@ Static site for [MOAS / Mänick Mänschion](https://github.com/Grumbel/moas),
 structured like [kurvenrausch.github.io](https://github.com/kurvenrausch/kurvenrausch.github.io)
 and [SuperTux-Origins.github.io](https://github.com/SuperTux-Origins/SuperTux-Origins.github.io):
 
-- **Nix flake** pulls the playable **WASM** package (`github:Grumbel/moas#moas-wasm`)
+- **Nix flake** pulls the playable **WASM** package (`github:Grumbel/moas#manick-wasm`)
   and the downloadable ports (Windows 64/32-bit zips, the Android APK, the R36S
   PortMaster zip, the DOS zip) from the game flake and assembles
   `index.html`, screenshots, `play/` and `downloads/` into a single store path;
@@ -29,9 +29,9 @@ and [SuperTux-Origins.github.io](https://github.com/SuperTux-Origins/SuperTux-Or
 # Build the full site (HTML + WASM under play/)
 nix build
 ls result/
-# result/index.html  result/images/  result/play/{index,moas}.{html,js,wasm,...}
-# result/downloads/moas-win64.zip  moas-win32.zip  moas.apk
-# result/downloads/r36s/moas.zip
+# result/index.html  result/images/  result/play/{index,manick}.{html,js,wasm,...}
+# result/downloads/manick-win64.zip  manick-win32.zip  manick.apk
+# result/downloads/r36s/manick.zip
 
 # Build against a local checkout of the game instead of GitHub:
 nix build --override-input moas git+file://$HOME/projects/moas

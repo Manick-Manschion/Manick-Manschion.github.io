@@ -28,7 +28,7 @@
       let
         pkgs = nixpkgs.legacyPackages.${system};
         game = moas.packages.${system};
-        version = game.moas.version or "0.1.0-sdl";
+        version = game.manick.version or "0.1.0-sdl";
 
         site = pkgs.runCommand "manick-manschion-site" { } ''
           mkdir -p $out
@@ -37,21 +37,21 @@
 
           # Playable WASM build from the game flake (html/js/wasm + data).
           mkdir -p $out/play
-          cp -rv ${game.moas-wasm}/. $out/play/
+          cp -rv ${game.manick-wasm}/. $out/play/
           chmod -R u+w $out/play
 
           # Cache busting: GitHub Pages serves everything with max-age=600,
-          # so right after a deploy a browser could pair a cached moas.js
-          # with a fresh moas.wasm/moas.data (or the reverse). Version each
+          # so right after a deploy a browser could pair a cached manick.js
+          # with a fresh manick.wasm/manick.data (or the reverse). Version each
           # URL by content hash; unchanged files keep their URL and cache.
           ver() { sha256sum "$out/play/$1" | cut -c1-12; }
-          js=$(ver moas.js); wasm=$(ver moas.wasm); data=$(ver moas.data)
-          for f in $out/play/index.html $out/play/moas.html; do
+          js=$(ver manick.js); wasm=$(ver manick.wasm); data=$(ver manick.data)
+          for f in $out/play/index.html $out/play/manick.html; do
             substituteInPlace "$f" \
-              --replace-fail 'src="moas.js"' "src=\"moas.js?v=$js\"" \
+              --replace-fail 'src="manick.js"' "src=\"manick.js?v=$js\"" \
               --replace-fail 'var Module = {' "var Module = {
       locateFile: function(path, prefix) {
-        var v = { 'moas.wasm': '$wasm', 'moas.data': '$data' }[path];
+        var v = { 'manick.wasm': '$wasm', 'manick.data': '$data' }[path];
         return prefix + path + (v ? '?v=' + v : \"\");
       },"
           done
@@ -59,11 +59,11 @@
           # Ports under stable names so the page's links never change
           # (the version is shown on the page).
           mkdir -p $out/downloads/r36s
-          cp -v ${game.moas-win64-zip}/*.zip $out/downloads/moas-win64.zip
-          cp -v ${game.moas-win32-zip}/*.zip $out/downloads/moas-win32.zip
-          cp -v ${game.moas-android}/*.apk $out/downloads/moas.apk
-          cp -v ${game.moas-r36s-portmaster-zip}/*.zip $out/downloads/r36s/moas.zip
-          cp -v ${game.moas-dos-zip}/*.zip $out/downloads/moas-dos.zip
+          cp -v ${game.manick-win64-zip}/*.zip $out/downloads/manick-win64.zip
+          cp -v ${game.manick-win32-zip}/*.zip $out/downloads/manick-win32.zip
+          cp -v ${game.manick-android}/*.apk $out/downloads/manick.apk
+          cp -v ${game.manick-r36s-portmaster-zip}/*.zip $out/downloads/r36s/manick.zip
+          cp -v ${game.manick-dos-zip}/*.zip $out/downloads/manick-dos.zip
           chmod -R u+w $out/downloads
         '';
 
