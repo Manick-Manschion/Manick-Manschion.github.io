@@ -34,7 +34,7 @@ ls result/
 # result/downloads/r36s/manick.zip
 
 # Build against a local checkout of the game instead of GitHub:
-nix build --override-input moas git+file://$HOME/projects/moas
+nix build --override-input manick git+file://$HOME/projects/moas
 
 # Serve and open a browser (port 8765 by default)
 nix run .
@@ -52,7 +52,7 @@ MANICK_PORT=9000 nix run .#serve
 The WASM build and the ports are built by the
 [moas](https://github.com/Grumbel/moas) flake; this site only packages them.
 The site follows the game revision in `flake.lock`: after pushing the game,
-run `nix flake update moas` here and push to rebuild everything. The build
+run `nix flake update manick` here and push to rebuild everything. The build
 runs on x86_64-linux only (Android SDK and cross toolchains).
 
 ## License

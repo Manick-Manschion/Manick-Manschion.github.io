@@ -9,9 +9,9 @@
 
 ## Cache busting for play/ (2026-10-21)
 - GitHub Pages sends `max-age=600` with no versioned URLs, so after a deploy
-  a cached moas.js could meet a fresh moas.wasm/moas.data. The site build now
-  appends `?v=<sha256[:12]>` to moas.js (script tag) and, via an injected
-  `Module.locateFile`, to moas.wasm/moas.data, in play/index.html and moas.html.
+  a cached manick.js could meet a fresh manick.wasm/manick.data. The site build now
+  appends `?v=<sha256[:12]>` to manick.js (script tag) and, via an injected
+  `Module.locateFile`, to manick.wasm/manick.data, in play/index.html and manick.html.
 - Checked: headless Firefox requests all three with `?v=`, 200 each.
 - Left: a stale cached play/index.html (≤10 min) still names old hashes.
   Landing-page images and downloads are unversioned, which is harmless.
@@ -25,12 +25,13 @@
   old `game.moas` fell back silently to "0.1.0-sdl").
 - Downloads now ship as `manick-win64.zip`, `manick-win32.zip`, `manick.apk`,
   `r36s/manick.zip`, `manick-dos.zip`; old `moas*` download URLs are gone.
-  The flake input stays named `moas` (the repo is still Grumbel/moas).
+  The flake input is renamed to `manick` too; only the repo URL (Grumbel/moas)
+  and references to the MOAS engine keep the old name.
 
 ## Done (this stack)
 - Scaffold flake.nix pulling `git+https://github.com/Grumbel/moas`
-  - packages used: moas-wasm, moas-win64-zip, moas-win32-zip, moas-android,
-    moas-r36s-portmaster-zip, moas-dos-zip
+  - packages used: manick-wasm, manick-win64-zip, manick-win32-zip, manick-android,
+    manick-r36s-portmaster-zip, manick-dos-zip
   - site under `result/`: index.html, images/, play/, downloads/
 - index.html adapted for Mänick Mänschion (hero screenshot, play button →
   play/index.html, download list for Windows/Android/R36S/DOS/Linux)
@@ -60,14 +61,14 @@
 - Generate flake.lock (`nix flake lock` or first `nix build`) on a machine
   with network; commit lock and push.
 - Enable GitHub Pages → source: GitHub Actions.
-- After game flake updates: `nix flake update moas` and push.
-- Confirm WASM install layout (moas.html / index.html / .data) matches
+- After game flake updates: `nix flake update manick` and push.
+- Confirm WASM install layout (manick.html / index.html / .data) matches
   play/ links after a full build; adjust flake copy step if names differ.
 - Optional: add more screenshots or a short “how to play” from game data.
 
 ## Notes
 - Build is x86_64-linux only (Android NDK / cross).
-- The DOS zip is copied like the other ports; a failing moas-dos-zip build
+- The DOS zip is copied like the other ports; a failing manick-dos-zip build
   fails the site build.
 - Do not spend long CI test runs in the agent environment; hand over the
   bundle and let the maintainer build.
