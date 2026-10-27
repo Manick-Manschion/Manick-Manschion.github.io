@@ -75,6 +75,29 @@
         "type": "github"
       }
     },
+    "manick": {
+      "inputs": {
+        "SDL2-win32": "SDL2-win32",
+        "flake-utils": "flake-utils_2",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "sdl2-src": "sdl2-src"
+      },
+      "locked": {
+        "lastModified": 1793140278,
+        "narHash": "sha256-C8U1CCDODvyKgvTT5fXf9Tq8/2fmD0N8A+NB0virEE4=",
+        "ref": "refs/heads/master",
+        "rev": "396f07a700e1dd615c5edf747f1524d15701e971",
+        "revCount": 201,
+        "type": "git",
+        "url": "https://github.com/Grumbel/moas"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://github.com/Grumbel/moas"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1792773339,
@@ -94,8 +117,8 @@
     "root": {
       "inputs": {
         "flake-utils": "flake-utils",
-        "nixpkgs": "nixpkgs",
-        "manick": "manick"
+        "manick": "manick",
+        "nixpkgs": "nixpkgs"
       }
     },
     "sdl2-src": {
@@ -139,29 +162,6 @@
         "owner": "nix-systems",
         "repo": "default",
         "type": "github"
-      }
-    },
-    "manick": {
-      "inputs": {
-        "SDL2-win32": "SDL2-win32",
-        "flake-utils": "flake-utils_2",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "sdl2-src": "sdl2-src"
-      },
-      "locked": {
-        "lastModified": 1793135766,
-        "narHash": "sha256-mMwOOUpxncm+Si4/XM277eACd4ci+5r8AbzOgs+RxRI=",
-        "ref": "refs/heads/master",
-        "rev": "4e7977b99fdd037adce867beb275da1ad3d0f052",
-        "revCount": 198,
-        "type": "git",
-        "url": "https://github.com/Grumbel/moas"
-      },
-      "original": {
-        "type": "git",
-        "url": "https://github.com/Grumbel/moas"
       }
     }
   },
