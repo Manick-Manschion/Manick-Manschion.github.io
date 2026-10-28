@@ -85,11 +85,11 @@
         "sdl2-src": "sdl2-src"
       },
       "locked": {
-        "lastModified": 1793184474,
-        "narHash": "sha256-XyU8+FSd32Xi38uxWU8vyOsQhDcjgzN7IMPowykE8fc=",
+        "lastModified": 1793186385,
+        "narHash": "sha256-N9Y638y7EkwjcnH4YKy2MSGKJ61vG8BPlTbnr4mOJdg=",
         "ref": "refs/heads/master",
-        "rev": "1868aaeaaa9c83dfa31142fdeba15fe08a31fe92",
-        "revCount": 206,
+        "rev": "59ea9810a794d5600abb9e1ea0c4fadd6bdb1fb3",
+        "revCount": 209,
         "type": "git",
         "url": "https://github.com/Grumbel/moas"
       },
