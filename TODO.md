@@ -97,3 +97,9 @@
 - Kept existing layout, artwork, download URLs, control mappings, language claims,
   and original-release/walkthrough links intact.
 - Checked with `git diff --check`; full Nix build not run in this handoff environment.
+
+
+## Copy revision (2026-10-28)
+- Removed the previous round of generic jokey marketing copy and returned to a plainer, story-led description closer to the game's own understated comedy.
+- Restored straightforward headings, screenshots captions, and platform instructions; retained current controls and platform details.
+- Checked with `git diff --check`; full Nix build not run.
