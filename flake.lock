@@ -85,11 +85,11 @@
         "sdl2-src": "sdl2-src"
       },
       "locked": {
-        "lastModified": 1793140278,
-        "narHash": "sha256-C8U1CCDODvyKgvTT5fXf9Tq8/2fmD0N8A+NB0virEE4=",
+        "lastModified": 1793183080,
+        "narHash": "sha256-zDtCoLWwOCk7ZHRvq9cJnzWGlrsnIN8qGOqF0l+l/0k=",
         "ref": "refs/heads/master",
-        "rev": "396f07a700e1dd615c5edf747f1524d15701e971",
-        "revCount": 201,
+        "rev": "d235cd6f18dd9cdb94d1f462b47a67fdd6fd7347",
+        "revCount": 205,
         "type": "git",
         "url": "https://github.com/Grumbel/moas"
       },
@@ -100,11 +100,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1792773339,
-        "narHash": "sha256-rZLrzrC6i+jnTAlvPZHogKDulY7WWDEv9hJeHieO7Zw=",
+        "lastModified": 1793110635,
+        "narHash": "sha256-dhoW6VgFWlaodSY5jrBn+CF2FLmaUvDVgM7+C7T2+NM=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "3ec636362e1816bc2f0888fa0fa2c69f1bc9e504",
+        "rev": "31ecbaca1bdefa45dffc409f0250bd8039ea0010",
         "type": "github"
       },
       "original": {
