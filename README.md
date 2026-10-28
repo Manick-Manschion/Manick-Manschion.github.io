@@ -18,7 +18,7 @@ and [SuperTux-Origins.github.io](https://github.com/SuperTux-Origins/SuperTux-Or
 .
 ├── flake.nix                 # site only (WASM and ports come from Grumbel/moas)
 ├── index.html                # landing page
-├── images/                   # screenshots (from the game docs/)
+├── images/                   # logo, stars, sprites, screenshots
 ├── scripts/serve.sh          # local HTTP server (no-cache headers)
 └── .github/workflows/pages.yml
 ```
@@ -59,4 +59,8 @@ runs on x86_64-linux only (Android SDK and cross toolchains).
 
 Site scaffolding: use freely (same spirit as the Kurvenrausch site template).
 Game binary / WASM: **GPL-2.0-or-later** (see [Grumbel/moas](https://github.com/Grumbel/moas)).
-Screenshot under `images/` is from the game documentation.
+Images under `images/` come from the game: the logo is the red lettering of
+the title screen (`manick-src/bild/bild_007.png`), `stars.png` the stars of
+its night sky (`bild_008.png`, whose colour bands the page's CSS gradient
+reproduces), `jack.png` and `dr-ed.png` the sprites from Thomas Holz's
+original release page; the game's graphics are public domain.

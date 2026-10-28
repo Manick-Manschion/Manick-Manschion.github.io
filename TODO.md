@@ -28,6 +28,22 @@
   The flake input is renamed to `manick` too; only the repo URL (Grumbel/moas)
   and references to the MOAS engine keep the old name.
 
+## Redesign (2026-10-28)
+- Night-sky look from the title screen: CSS gradient of `bild_008.png`'s colour
+  bands plus its stars (`images/stars.png`, tiled at 2×; scaling the whole
+  image made stars into big yellow blocks).
+- Logo: red lettering cut out of `bild_007.png` (palette 17–21) to
+  `images/logo.png` (318×149, shown at 2× pixelated); it links to `play/`.
+- Jack and Dr. Ed sprites (`prs_play.gif` / `prs_doc.gif` from
+  thomasholz.de/manick.htm) beside the logo and in the footer.
+- Four screenshots (team pick, front door, hall, kitchen) at 3× in a gallery
+  with a `<dialog>` lightbox; the old `screenshot.png` is gone.
+- Platform cards with inline SVG icons (browser, Windows, Android, handheld,
+  Linux, DOS); copy rewritten for players (story from the game's intro,
+  how-to-play, link to the original German walkthrough `loesung0.htm`).
+- Checked in headless Firefox at 1280 px and 390 px widths; not checked
+  with a full `nix build` (needs the game flake's ports).
+
 ## Done (this stack)
 - Scaffold flake.nix pulling `git+https://github.com/Grumbel/moas`
   - packages used: manick-wasm, manick-win64-zip, manick-win32-zip, manick-android,

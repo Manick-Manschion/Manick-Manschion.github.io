@@ -4,329 +4,686 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mänick Mänschion</title>
+  <meta name="description" content="Mänick Mänschion: a free comedy point-and-click adventure. Rescue Sandy from the mad Dr. Ed, right in your browser or on Windows, Android, Linux, handhelds and DOS.">
+  <meta property="og:title" content="Mänick Mänschion">
+  <meta property="og:description" content="A free comedy point-and-click adventure. Play it right in your browser.">
+  <meta property="og:image" content="images/shot-front-door.png">
+  <link rel="icon" type="image/png" href="images/jack.png">
   <style>
+    :root {
+      --night: #000059;
+      --panel: rgba(2, 4, 40, 0.86);
+      --panel-edge: rgba(120, 140, 255, 0.28);
+      --red: #ff3838;
+      --red-dark: #8e0000;
+      --gold: #ffcc33;
+      --gold-dark: #6a4a00;
+      --text: #e4e8f8;
+      --muted: #a8b0d8;
+      --grass: #3c9600;
+    }
+
     * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
-      min-height: 100vh;
-      font-family: "Helvetica Neue", Helvetica, Verdana, system-ui, sans-serif;
-      background-color: #1a1e28;
-      background-image:
-        linear-gradient(180deg, #1a1e28 0%, #0c0e14 100%);
-      color: #222;
-      line-height: 1.5;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--night);
+      color: var(--text);
+      line-height: 1.6;
     }
 
-    #page {
-      width: min(820px, 100%);
-      margin: 0 auto;
-      background: #fff;
-      box-shadow: 0 0 64px rgba(0, 0, 0, 0.85);
-      min-height: 100vh;
+    /* The title screen's night sky: its colour bands as a gradient, its stars
+       (images/stars.png, same positions) tiled on top at 2× */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        url("images/stars.png") 0 0 / 640px 400px repeat,
+        linear-gradient(180deg, #000059 0%, #00006d 12%, #000086 25%, #00009a 38%,
+                        #0000ae 50%, #0000c7 63%, #0000db 77%, #0004ff 100%);
+      image-rendering: pixelated;
     }
 
-    header {
-      text-align: center;
-      background: linear-gradient(180deg, #2a3140 0%, #1a1e28 100%);
-      border-bottom: 4px solid #e8a020;
-      padding: 1.5rem 1rem 1rem;
-      color: #f0f2f5;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 2rem;
-      letter-spacing: 0.04em;
-      color: #f5c040;
-      text-shadow: 0 2px 0 #3a2800;
-    }
-
-    header .tagline {
-      margin: 0.5rem 0 0;
-      color: #b8c0d0;
-      font-size: 1rem;
-    }
-
-    .hero {
-      display: block;
-      width: 100%;
-      height: auto;
+    img.pixel {
       image-rendering: pixelated;
       image-rendering: crisp-edges;
-      background: #000;
     }
 
-    #pagebody {
-      padding: 1.25rem 1.75rem 2rem;
+    a { color: var(--gold); }
+    a:hover { color: #fff; }
+
+    main {
+      width: min(1040px, 100%);
+      margin: 0 auto;
+      padding: 0 16px 3rem;
     }
 
-    section {
+    /* ---------- Hero ---------- */
+
+    .hero {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 1.5rem;
+      padding: 3rem 0 0.5rem;
+    }
+
+    .hero .sprite { flex: 0 0 auto; margin-bottom: 0.25rem; }
+    .hero .jack { width: 84px; height: 162px; }
+    .hero .dr-ed { width: 96px; height: 192px; }
+
+    .logo-link {
+      display: block;
+      position: relative;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: transform 0.15s ease;
+    }
+
+    .logo-link img {
+      display: block;
+      width: 636px;  /* 2× the original 318×149 */
+      height: auto;
+      filter: drop-shadow(0 6px 0 rgba(0, 0, 0, 0.35));
+    }
+
+    .logo-link:hover,
+    .logo-link:focus-visible { transform: scale(1.03) rotate(-1deg); }
+    .logo-link:focus-visible { outline: 3px dashed var(--gold); outline-offset: 8px; }
+
+    .tagline {
+      text-align: center;
+      font-size: 1.25rem;
+      margin: 1rem auto 0;
+      max-width: 40rem;
+      text-shadow: 0 2px 4px #000;
+    }
+
+    .cta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.75rem;
+      margin: 1.5rem 0 3rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-decoration: none;
+      border: 2px solid transparent;
+    }
+
+    .btn svg { width: 1.25em; height: 1.25em; }
+
+    .btn-play {
+      background: var(--red);
+      color: #fff;
+      box-shadow: 0 4px 0 var(--red-dark);
+      text-shadow: 0 1px 0 var(--red-dark);
+    }
+
+    .btn-play:hover { background: #ff5a5a; color: #fff; }
+    .btn-play:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--red-dark); }
+
+    .btn-ghost {
+      color: var(--text);
+      border-color: var(--panel-edge);
+      background: rgba(2, 4, 40, 0.6);
+    }
+
+    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ---------- Panels ---------- */
+
+    section.panel {
+      background: var(--panel);
+      border: 1px solid var(--panel-edge);
+      border-radius: 14px;
+      padding: 1.5rem 1.75rem 1.75rem;
       margin-bottom: 1.75rem;
+      backdrop-filter: blur(2px);
     }
 
     h2 {
-      margin: 0 0 0.5rem;
-      font-size: 1.35rem;
-      color: #2a3140;
-      border-bottom: 1px solid #e0e4ec;
-      padding-bottom: 0.25rem;
+      margin: 0 0 0.75rem;
+      font-size: 1.75rem;
+      line-height: 1.2;
+      color: var(--red);
+      text-shadow: 3px 3px 0 var(--red-dark);
+      letter-spacing: 0.02em;
     }
 
-    section > p {
-      margin: 0.5rem 0 0.75rem;
-      color: #444;
-      font-size: 0.95rem;
+    h3 {
+      margin: 0 0 0.25rem;
+      font-size: 1.1rem;
+      color: var(--gold);
     }
 
-    ul {
-      margin: 0.25rem 0 0;
-      padding-left: 1.25rem;
-    }
+    p { margin: 0 0 0.85rem; }
+    p:last-child { margin-bottom: 0; }
 
-    li {
-      margin: 0.35rem 0;
-    }
+    .lead { font-size: 1.1rem; }
 
-    a {
-      color: #c47800;
-      text-decoration: none;
-      font-weight: 600;
-    }
+    .muted { color: var(--muted); }
 
-    a:hover {
-      color: #8a5200;
-      text-decoration: underline;
-    }
+    /* ---------- Story ---------- */
 
-    .play-btn {
-      display: inline-block;
-      margin: 0.5rem 0 1rem;
-      padding: 0.65rem 1.4rem;
-      background: #e8a020;
-      color: #1a1200 !important;
-      border-radius: 6px;
-      font-size: 1.05rem;
-      font-weight: 700;
-      text-decoration: none !important;
-      box-shadow: 0 2px 0 #a07010;
-    }
+    /* ---------- Screenshots ---------- */
 
-    .play-btn:hover {
-      background: #f5b830;
-      color: #1a1200 !important;
-    }
-
-    .downloads {
-      list-style: none;
-      padding: 0;
-      margin: 0.5rem 0 0.75rem;
+    .gallery {
       display: grid;
-      gap: 0.5rem;
-    }
-
-    .downloads li {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
       margin: 0;
-      padding: 0.6rem 0.8rem;
-      border: 1px solid #e0e4ec;
-      border-radius: 6px;
-      background: #f8f9fb;
+      padding: 0;
+      list-style: none;
     }
 
-    .downloads .note {
+    .gallery figure { margin: 0; }
+
+    .gallery a {
       display: block;
-      color: #555;
-      font-size: 0.85rem;
-      font-weight: normal;
-    }
-
-    .shot-row {
-      display: flex;
-      gap: 1.25rem;
-      align-items: flex-start;
-      margin: 0.75rem 0 0;
-    }
-
-    .shot-row img {
-      flex: 0 0 auto;
-      width: 180px;
-      height: auto;
-      border-radius: 10px;
-      border: 3px solid #2a3140;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 3px solid #1c2366;
       background: #000;
+      transition: border-color 0.15s ease, transform 0.15s ease;
     }
 
-    .shot-row p {
+    .gallery a:hover,
+    .gallery a:focus-visible { border-color: var(--gold); transform: translateY(-2px); }
+
+    .gallery img {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 8 / 5;
+    }
+
+    .gallery figcaption {
+      margin-top: 0.4rem;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    dialog.lightbox {
+      padding: 0;
+      border: 3px solid var(--gold);
+      border-radius: 8px;
+      background: #000;
+      max-width: min(1280px, 96vw);
+    }
+
+    dialog.lightbox::backdrop { background: rgba(0, 0, 20, 0.85); }
+
+    dialog.lightbox img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 86vh;
+      object-fit: contain;
+      cursor: zoom-out;
+    }
+
+    dialog.lightbox p {
       margin: 0;
-      color: #444;
+      padding: 0.5rem 0.75rem;
+      color: var(--text);
+      background: #050833;
+    }
+
+    /* ---------- Platforms ---------- */
+
+    .platforms {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+      margin: 1rem 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .platform {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      grid-template-rows: auto 1fr auto;
+      gap: 0.25rem 0.9rem;
+      padding: 1rem;
+      border-radius: 10px;
+      background: rgba(20, 28, 110, 0.45);
+      border: 1px solid var(--panel-edge);
+    }
+
+    .platform.featured {
+      background: rgba(140, 10, 10, 0.35);
+      border-color: rgba(255, 56, 56, 0.6);
+    }
+
+    .platform .icon {
+      grid-row: 1;
+      width: 48px;
+      height: 48px;
+      color: var(--gold);
+    }
+
+    .platform h3 { align-self: center; }
+    .platform > :not(.icon) { grid-column: 2; }
+
+    .platform p {
+      margin: 0;
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+
+    .platform .links {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      gap: 0.4rem;
+      margin-top: 0.4rem;
+    }
+
+    .platform .links a {
+      display: inline-block;
+      padding: 0.2rem 0.7rem;
+      border-radius: 6px;
+      background: var(--gold);
+      color: #1a1200;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-decoration: none;
+    }
+
+    .platform .links a:hover { background: #fff; }
+
+    .platform.featured .links a { background: var(--red); color: #fff; }
+    .platform.featured .links a:hover { background: #ff6a6a; }
+
+    code {
+      font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+      font-size: 0.88em;
+      background: rgba(0, 0, 0, 0.35);
+      padding: 0.05em 0.35em;
+      border-radius: 4px;
+      color: var(--text);
+      overflow-wrap: anywhere;
+    }
+
+    .version { font-size: 0.9rem; color: var(--muted); margin-top: 1rem; }
+
+    /* ---------- How to play ---------- */
+
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1rem;
+    }
+
+    .controls ul {
+      margin: 0.25rem 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .controls li {
+      margin: 0.35rem 0;
       font-size: 0.95rem;
     }
 
-    @media (max-width: 520px) {
-      .shot-row {
-        flex-direction: column;
-        align-items: center;
-      }
+    .touch {
+      display: grid;
+      grid-template-columns: 1fr 150px;
+      gap: 1rem;
+      align-items: start;
+    }
+
+    .touch img {
+      width: 150px;
+      height: auto;
+      border-radius: 12px;
+      border: 3px solid #1c2366;
     }
 
     kbd {
       display: inline-block;
-      padding: 0 0.35em;
-      border: 1px solid #c8cdd8;
-      border-bottom-width: 2px;
-      border-radius: 4px;
-      background: #f4f5f8;
+      min-width: 1.6em;
+      padding: 0 0.4em;
+      border: 1px solid #5a64a8;
+      border-bottom-width: 3px;
+      border-radius: 5px;
+      background: #141a5a;
+      color: #fff;
       font-family: inherit;
       font-size: 0.85em;
-      line-height: 1.4;
+      line-height: 1.5;
+      text-align: center;
     }
 
-    .version {
-      color: #666;
-      font-size: 0.85rem;
+    .stuck {
+      margin-top: 1.5rem;
+      padding: 1rem 1.25rem;
+      border-left: 4px solid var(--red);
+      background: rgba(140, 10, 10, 0.25);
+      border-radius: 0 8px 8px 0;
     }
+
+    .stuck strong { color: var(--red); }
+
+    /* ---------- Footer ---------- */
 
     footer {
-      background-color: #12151c;
-      color: #a0a8b8;
-      font-size: 0.85rem;
       text-align: center;
-      padding: 0.75rem 1rem;
-      line-height: 1.4;
+      font-size: 0.9rem;
+      color: var(--muted);
+      padding: 1rem 16px 2.5rem;
+      text-shadow: 0 1px 2px #000;
     }
 
-    footer a {
-      color: #f0b040;
-      font-weight: 500;
+    footer .sprites {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
     }
 
-    footer a:hover {
-      color: #fff;
+    footer .sprites img:first-child { width: 56px; height: 108px; }
+    footer .sprites img:last-child { width: 64px; height: 128px; transform: scaleX(-1); }
+
+    /* ---------- Small screens ---------- */
+
+    @media (max-width: 900px) {
+      .hero .sprite { display: none; }
+    }
+
+    @media (max-width: 680px) {
+      .hero { padding-top: 2rem; }
+      .logo-link img { width: 100%; max-width: 318px; }
+      .tagline { font-size: 1.05rem; }
+      section.panel { padding: 1.25rem 1rem 1.25rem; }
+      h2 { font-size: 1.45rem; }
+      .gallery { grid-template-columns: 1fr; }
+      .touch { grid-template-columns: 1fr; }
+      .touch img { justify-self: center; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .logo-link, .gallery a { transition: none; }
+      .logo-link:hover, .logo-link:focus-visible,
+      .gallery a:hover, .gallery a:focus-visible { transform: none; }
     }
   </style>
 </head>
 <body>
-  <div id="page">
-    <header>
-      <h1>Mänick Mänschion</h1>
-      <p class="tagline">Point-and-click adventure · MOAS engine</p>
+  <!-- Icons: simple glyphs, drawn for this page -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-play" viewBox="0 0 24 24"><path fill="currentColor" d="M7 4.5v15a1 1 0 0 0 1.5.86l12-7.5a1 1 0 0 0 0-1.72l-12-7.5A1 1 0 0 0 7 4.5Z"/></symbol>
+    <symbol id="i-browser" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="3"><circle cx="24" cy="24" r="19"/><ellipse cx="24" cy="24" rx="8" ry="19"/><path d="M5 24h38M8 14h32M8 34h32"/></g></symbol>
+    <symbol id="i-windows" viewBox="0 0 48 48"><path fill="currentColor" d="M5 9.5 21 7v15.5H5Zm19-3L43 4v18.5H24ZM5 25.5h16V41L5 38.5Zm19 0h19V44l-19-2.6Z"/></symbol>
+    <symbol id="i-android" viewBox="0 0 48 48"><g fill="currentColor"><path d="M9 26a15 15 0 0 1 30 0Z"/><rect x="9" y="28" width="30" height="13" rx="2"/><rect x="2" y="22" width="5" height="14" rx="2.5"/><rect x="41" y="22" width="5" height="14" rx="2.5"/><rect x="15" y="38" width="5" height="8" rx="2.5"/><rect x="28" y="38" width="5" height="8" rx="2.5"/></g><g stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="m14 8 4 6M34 8l-4 6"/></g><g fill="#050833"><circle cx="18" cy="19.5" r="2"/><circle cx="30" cy="19.5" r="2"/></g></symbol>
+    <symbol id="i-handheld" viewBox="0 0 48 48"><rect x="10" y="2" width="28" height="44" rx="4" fill="none" stroke="currentColor" stroke-width="3"/><rect x="15" y="7" width="18" height="15" rx="1" fill="currentColor"/><path fill="currentColor" d="M16 30h3v-3h3v3h3v3h-3v3h-3v-3h-3Z"/><circle cx="31" cy="29.5" r="2.2" fill="currentColor"/><circle cx="28" cy="35" r="2.2" fill="currentColor"/></symbol>
+    <symbol id="i-linux" viewBox="0 0 48 48"><path fill="currentColor" d="M24 3c-6 0-9 5-9 11 0 4-2 7-5 12-3 5-4 10-2 13 1.5 2.5 6 3 9 3h14c3 0 7.5-.5 9-3 2-3 1-8-2-13-3-5-5-8-5-12 0-6-3-11-9-11Z"/><path fill="#050833" d="M24 17c-5 0-8 6-8 13 0 6 3 9 8 9s8-3 8-9c0-7-3-13-8-13Z"/><circle cx="20.5" cy="11" r="2" fill="#050833"/><circle cx="27.5" cy="11" r="2" fill="#050833"/><path fill="#ffcc33" d="M20 15h8l-4 4Z"/><path fill="currentColor" d="M8 44c2-4 8-4 10-1l-1 3H9Zm32 0c-2-4-8-4-10-1l1 3h8Z"/></symbol>
+    <symbol id="i-dos" viewBox="0 0 48 48"><path fill="currentColor" d="M6 4h31l7 7v31a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"/><rect x="13" y="4" width="20" height="13" fill="#050833"/><rect x="26" y="7" width="4" height="7" fill="currentColor"/><rect x="10" y="25" width="28" height="19" fill="#050833"/><path stroke="currentColor" stroke-width="2" d="M14 31h20M14 37h14"/></symbol>
+  </svg>
+
+  <main>
+    <header class="hero">
+      <img class="sprite pixel jack" src="images/jack.png" width="28" height="54" alt="">
+      <a class="logo-link" href="play/index.html" title="Click to play in your browser">
+        <img class="pixel" src="images/logo.png" width="318" height="149"
+             alt="Mänick Mänschion. Click to play in your browser">
+      </a>
+      <img class="sprite pixel dr-ed" src="images/dr-ed.png" width="32" height="64" alt="">
     </header>
 
-    <img class="hero" src="images/screenshot.png" width="960" height="600"
-         alt="Mänick Mänschion: the front door of the mansion at night, with a cactus, a mailbox and the protagonist on the garden path">
+    <p class="tagline">
+      The mad Dr. Ed has kidnapped your girlfriend. Grab two friends, sneak into his
+      mansion and get her back in this free comedy point-and-click adventure.
+    </p>
 
-    <div id="pagebody">
-      <section>
-        <h2>Play in the browser</h2>
-        <p>
-          Original 320×200, 256-colour software graphics, packaged as
-          WebAssembly with Emscripten (ASYNCIFY) and the full game data
-          preloaded. Built with Nix from the same source as the native ports.
-          The game is German, with English, Spanish, French, Italian and Dutch
-          translations, including the title cards, help pages and credits. It
-          starts in your system's language; switch it in the options menu
-          (<kbd>F12</kbd> or the <strong>Options</strong> button).
-          Saves stay in your browser and can be downloaded and uploaded to move
-          them to another device.
-        </p>
-        <a class="play-btn" href="play/index.html">Play Mänick Mänschion (WASM)</a>
-        <ul>
-          <li><a href="https://github.com/Grumbel/moas">Source code (MOAS / Mänick Mänschion)</a></li>
-          <li><a href="https://github.com/Grumbel/moas#build-and-run">Native build (Nix / CMake)</a></li>
-        </ul>
-      </section>
-
-      <section id="download">
-        <h2>Download</h2>
-        <p>
-          Built from the same source as the browser version,
-          <span class="version">version @version@</span>.
-        </p>
-        <ul class="downloads">
-          <li>
-            <a href="downloads/manick-win64.zip">Windows (64-bit)</a>
-            · <a href="downloads/manick-win32.zip">32-bit</a>
-            <span class="note">Unzip and start <code>manick.exe</code>. Windows 7 and later. SDL2 included.</span>
-          </li>
-          <li>
-            <a href="downloads/manick.apk">Android (APK)</a>
-            <span class="note">Android 5.1 and later; touch buttons in landscape and portrait,
-              gamepads and keyboards. Allow installing apps from your browser to install it.</span>
-          </li>
-          <li>
-            <a href="downloads/r36s/manick.zip">R36S and other PortMaster handhelds</a>
-            <span class="note">For ArkOS and alike (aarch64): put the zip into
-              <code>ports/PortMaster/autoinstall/</code> and start PortMaster, or unpack it to
-              <code>/roms/ports/</code>.</span>
-          </li>
-          <li>
-            <a href="downloads/manick-dos.zip">MS-DOS (DOS/4GW)</a>
-            <span class="note">Rebuilt with Open Watcom for DOSBox / real DOS.</span>
-          </li>
-          <li>
-            <a href="https://github.com/Grumbel/moas#build-and-run">Linux and other systems</a>
-            <span class="note">Build from source with Nix (<code>nix run github:Grumbel/moas</code>)
-              or CMake and SDL2.</span>
-          </li>
-        </ul>
-      </section>
-
-      <section>
-        <h2>About</h2>
-        <p>
-          <strong>Mänick Mänschion</strong> is a German point-and-click adventure
-          from the mid-1990s by Thomas Holz — a humorous, home-made parody of
-          <em>Maniac Mansion</em>. It runs on the <strong>MOAS</strong>
-          (Mouse Orientiertes Adventure System) engine, originally written for
-          DOS (VGA Mode 13h, SoundBlaster). This site hosts the modern SDL2
-          port: same game logic, platform layer for video, input, timer and
-          audio, with ports to Linux, Windows, Android, WebAssembly, R36S and
-          a DOS rebuild, and translations into five languages.
-        </p>
-        <p>
-          Original release page:
-          <a href="http://www.thomasholz.de/manick.htm">thomasholz.de/manick.htm</a>.
-        </p>
-      </section>
-
-      <section>
-        <h2>Controls</h2>
-        <ul>
-          <li><strong>Left click / tap</strong> — walk, use, talk, pick up</li>
-          <li><strong>Right click</strong> — look at an object (on touch: the LOOK mode button)</li>
-          <li><kbd>Tab</kbd> — inventory bar</li>
-          <li><kbd>F5</kbd> / <kbd>F7</kbd> — save / load</li>
-          <li><kbd>Esc</kbd> — skip a cutscene (when the game allows it);
-            <kbd>Shift</kbd> — speed up speech</li>
-          <li><kbd>H</kbd> (hold) — outline everything you can click in the room</li>
-          <li><kbd>F12</kbd> — options: resume, save, load, restart, quit, and settings
-            (language, fullscreen, aspect ratio 4:3 or 8:5, touch buttons, game and speech speed; remembered
-            for the next start)</li>
-          <li><kbd>F11</kbd> or <kbd>Alt</kbd>+<kbd>Enter</kbd> — fullscreen;
-            <kbd>Alt</kbd>+<kbd>Q</kbd> — quit</li>
-          <li><strong>Gamepad</strong> — sticks move the cursor (both together: faster), D-pad walk, A/R1 use, B/L1 look, X skip scene, Y skip text, Back hotspots, Start options, R2 save, L2 load, R3/L3 game speed up/down</li>
-        </ul>
-        <div class="shot-row">
-          <img src="images/screenshot-portrait.png" width="720" height="1280" loading="lazy"
-               alt="Android in portrait: the game at full width with two rows of touch buttons below it">
-          <p>
-            On Android and in the browser, touch buttons provide Save, Load,
-            USE / LOOK mode, Options, Hint, Skip Scene and Skip Text, so the
-            classic mouse workflow works without a pointer. In landscape they sit beside the
-            picture; in portrait the picture takes the full width and the buttons
-            move underneath. Save and Load are greyed out while the game would
-            ignore them (cutscenes, dialogues). Progress is kept automatically
-            when you leave the app and restored on the next start.
-          </p>
-        </div>
-      </section>
+    <div class="cta">
+      <a class="btn btn-play" href="play/index.html">
+        <svg aria-hidden="true"><use href="#i-play"/></svg>Play now in your browser
+      </a>
+      <a class="btn btn-ghost" href="#download">Download for your device</a>
     </div>
 
-    <footer>
-      <a href="https://github.com/Grumbel/moas">MOAS / Mänick Mänschion</a>
-      · GPL-2.0-or-later (engine)
-      · site built with Nix, deployed via GitHub Pages
-    </footer>
-  </div>
+    <section class="panel story">
+      <div>
+        <h2>The story so far</h2>
+        <p class="lead">
+          No meteor struck the Addisons' garden 20 years ago. Nevertheless, the mad
+          Dr. Ed became even madder and kidnapped Sandy, Jack's girlfriend.
+        </p>
+        <p>
+          After enjoying his new freedom for a while, Jack decides, with a heavy
+          heart, that he really ought to rescue her. You are Jack. Talk two of your
+          friends into coming along, find a way into the mansion and find out what
+          the Doc is building down in the basement. Look at everything, talk to
+          everyone, and earn points for every clever idea.
+        </p>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Screenshots</h2>
+      <ul class="gallery">
+        <li>
+          <figure>
+            <a href="images/shot-team.png">
+              <img class="pixel" src="images/shot-team.png" width="960" height="600"
+                   alt="Six friends in picture frames; one of them answers: Thanks for trusting me, Jack, but this is too dangerous for me">
+            </a>
+            <figcaption>Pick your team. Not every friend is brave enough to come along.</figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure>
+            <a href="images/shot-front-door.png">
+              <img class="pixel" src="images/shot-front-door.png" width="960" height="600"
+                   alt="Jack at the mansion's front door at night, between a cactus and a mailbox, choosing what to say">
+            </a>
+            <figcaption>Knock, knock. Jack is looking for his girlfriend.</figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure>
+            <a href="images/shot-hall.png">
+              <img class="pixel" src="images/shot-hall.png" width="960" height="600"
+                   alt="A magenta entrance hall with a red staircase; Jack says: The picture is nailed down">
+            </a>
+            <figcaption>Try everything, even when the mansion has other plans.</figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure>
+            <a href="images/shot-kitchen.png">
+              <img class="pixel" src="images/shot-kitchen.png" width="960" height="600"
+                   alt="Jack in a turquoise kitchen; he remarks: Interesting architecture. The score shows 5 points">
+            </a>
+            <figcaption>Explore every room and collect points along the way.</figcaption>
+          </figure>
+        </li>
+      </ul>
+    </section>
+
+    <section class="panel" id="download">
+      <h2>Play it anywhere</h2>
+      <p>
+        Free to play, with no ads and no sign-up. Play in English, German (the original),
+        Spanish, French, Italian or Dutch. The game starts in your system's language,
+        and you can switch at any time in the options menu.
+      </p>
+      <ul class="platforms">
+        <li class="platform featured">
+          <svg class="icon" aria-hidden="true"><use href="#i-browser"/></svg>
+          <h3>Browser</h3>
+          <p>Nothing to install. Works on desktop, tablet and phone. Your saves stay
+            in the browser, and you can download them to continue on another device.</p>
+          <div class="links"><a href="play/index.html">Play now</a></div>
+        </li>
+        <li class="platform">
+          <svg class="icon" aria-hidden="true"><use href="#i-windows"/></svg>
+          <h3>Windows</h3>
+          <p>Windows 7 or newer. Unzip and start <code>manick.exe</code>.</p>
+          <div class="links">
+            <a href="downloads/manick-win64.zip">64-bit</a>
+            <a href="downloads/manick-win32.zip">32-bit</a>
+          </div>
+        </li>
+        <li class="platform">
+          <svg class="icon" aria-hidden="true"><use href="#i-android"/></svg>
+          <h3>Android</h3>
+          <p>Android 5.1 or newer. Play with touch, a gamepad or a keyboard. Your browser
+            will ask for permission to install the app.</p>
+          <div class="links"><a href="downloads/manick.apk">APK</a></div>
+        </li>
+        <li class="platform">
+          <svg class="icon" aria-hidden="true"><use href="#i-handheld"/></svg>
+          <h3>R36S &amp; handhelds</h3>
+          <p>For PortMaster on ArkOS and similar. Drop the zip into
+            <code>ports/PortMaster/autoinstall/</code>, or unpack it to <code>/roms/ports/</code>.</p>
+          <div class="links"><a href="downloads/r36s/manick.zip">PortMaster zip</a></div>
+        </li>
+        <li class="platform">
+          <svg class="icon" aria-hidden="true"><use href="#i-linux"/></svg>
+          <h3>Linux</h3>
+          <p>With Nix, run <code>nix run github:Grumbel/moas</code>, or build it from
+            source with CMake and SDL2.</p>
+          <div class="links"><a href="https://github.com/Grumbel/moas#build-and-run">Instructions</a></div>
+        </li>
+        <li class="platform">
+          <svg class="icon" aria-hidden="true"><use href="#i-dos"/></svg>
+          <h3>MS-DOS</h3>
+          <p>The way it was meant to be played in the '90s. For DOSBox or a real retro PC.</p>
+          <div class="links"><a href="downloads/manick-dos.zip">DOS zip</a></div>
+        </li>
+      </ul>
+      <p class="version">Current version: @version@</p>
+    </section>
+
+    <section class="panel" id="how-to-play">
+      <h2>How to play</h2>
+      <p>
+        Point at something and click. Jack walks there and uses it, picks it up or talks
+        to whoever is standing there. Right-click to look at things first, because the
+        descriptions are half the fun.
+      </p>
+
+      <div class="controls">
+        <div>
+          <h3>Mouse &amp; keyboard</h3>
+          <ul>
+            <li><strong>Left click</strong>: walk, use, talk, pick up</li>
+            <li><strong>Right click</strong>: look at something</li>
+            <li><kbd>Tab</kbd>: inventory</li>
+            <li><kbd>H</kbd> (hold): show everything you can click</li>
+            <li><kbd>F5</kbd> / <kbd>F7</kbd>: save / load</li>
+            <li><kbd>Esc</kbd>: skip a cutscene · <kbd>Shift</kbd>: faster speech</li>
+            <li><kbd>F12</kbd>: options (language, speed, fullscreen and more)</li>
+            <li><kbd>F11</kbd>: fullscreen</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Gamepad</h3>
+          <ul>
+            <li><strong>Sticks</strong>: move the pointer (use both to go faster)</li>
+            <li><strong>D-pad</strong>: walk</li>
+            <li><strong>A</strong> / <strong>R1</strong>: use · <strong>B</strong> / <strong>L1</strong>: look</li>
+            <li><strong>X</strong>: skip scene · <strong>Y</strong>: skip text</li>
+            <li><strong>Back</strong>: show hotspots · <strong>Start</strong>: options</li>
+            <li><strong>R2</strong> / <strong>L2</strong>: save / load</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="touch" style="margin-top:1.25rem">
+        <div>
+          <h3>Touch</h3>
+          <p>
+            On phones and tablets, tap to walk and use things. The buttons next to the
+            picture switch between USE and LOOK and give you Save, Load, Options, a Hint,
+            Skip Scene and Skip Text. Turn your phone sideways and the buttons move to
+            the side. If you leave the app, your game is kept and waiting for you when
+            you come back.
+          </p>
+        </div>
+        <img src="images/screenshot-portrait.png" width="720" height="1280"
+             alt="The game on an Android phone in portrait, with two rows of touch buttons under the picture">
+      </div>
+
+      <div class="stuck">
+        <p>
+          <strong>Fair warning:</strong> the game's author says it isn't easy. If you get stuck,
+          hold <kbd>H</kbd> (or tap Hint) to see what you've missed. If that still doesn't
+          help, there's the original
+          <a href="http://www.thomasholz.de/loesung0.htm">complete walkthrough</a> (in German).
+        </p>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>About the game</h2>
+      <p>
+        <strong>Mänick Mänschion</strong> is a home-grown homage to the classic
+        <em>Maniac Mansion</em>, written, drawn and given away for free by Thomas Holz in
+        the mid-1990s. It runs on his own adventure engine, MOAS. This edition plays the
+        original game on today's computers, phones and handhelds, with translations,
+        touch and gamepad controls added. The story and the puzzles are unchanged.
+      </p>
+      <p class="muted">
+        Visit the <a href="http://www.thomasholz.de/manick.htm">original release page</a>.
+        The game's graphics are also available as
+        <a href="http://pdgameresources.wordpress.com/">public domain game resources</a>.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="sprites">
+      <img class="pixel" src="images/jack.png" width="28" height="54" alt="">
+      <img class="pixel" src="images/dr-ed.png" width="32" height="64" alt="">
+    </div>
+    <a href="https://github.com/Grumbel/moas">Source code on GitHub</a>
+    · Game and engine: GPL-2.0-or-later
+  </footer>
+
+  <dialog class="lightbox" id="lightbox" aria-label="Screenshot">
+    <img class="pixel" src="" alt="">
+    <p></p>
+  </dialog>
+
+  <script>
+    (function () {
+      var box = document.getElementById("lightbox");
+      if (!box || typeof box.showModal !== "function") return;
+      var img = box.querySelector("img");
+      var cap = box.querySelector("p");
+      document.querySelectorAll(".gallery a").forEach(function (a) {
+        a.addEventListener("click", function (e) {
+          e.preventDefault();
+          var thumb = a.querySelector("img");
+          img.src = a.href;
+          img.alt = thumb.alt;
+          cap.textContent = a.parentNode.querySelector("figcaption").textContent;
+          box.showModal();
+        });
+      });
+      box.addEventListener("click", function () { box.close(); });
+    })();
+  </script>
 </body>
 </html>
