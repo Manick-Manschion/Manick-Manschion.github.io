@@ -88,3 +88,12 @@
   fails the site build.
 - Do not spend long CI test runs in the agent environment; hand over the
   bundle and let the maintainer build.
+
+## Copy refresh (2026-10-28)
+- Reworked landing-page copy to foreground the rescue mission, mad-scientist mansion,
+  puzzle-solving, and retro-adventure humour rather than generic project descriptions.
+- Updated page description and Open Graph description, story, screenshot captions,
+  platform cards, controls headings, stuck-player hint, and about section.
+- Kept existing layout, artwork, download URLs, control mappings, language claims,
+  and original-release/walkthrough links intact.
+- Checked with `git diff --check`; full Nix build not run in this handoff environment.
